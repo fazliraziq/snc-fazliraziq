@@ -13,6 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+model Company {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+}
+
 model User {
   id                 Int    @id @default(autoincrement())
   backgroundImageUrl String
@@ -21,4 +27,7 @@ model User {
   title              String @db.VarChar(100)
   followers          Int
   following          Int
+
+  companies   Company[]  @relation(fields: [companyIds], references: [id])
+  companyIds  Int[]
 }
