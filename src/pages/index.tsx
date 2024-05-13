@@ -1,12 +1,12 @@
 import { MainLayout } from "@/layouts/MainLayout";
-import { UsernameProvider } from "@/utils/helper/UserNameContext";
+import { EnableLogProvider } from "@/utils/helper/EnableLogContext";
 import { NextPage } from "next";
 
 const Home: NextPage = () => {
   return <>
-    <UsernameProvider>
+    <EnableLogProvider>
       <MainLayout />
-  </UsernameProvider>
+  </EnableLogProvider>
   </>
 };
 

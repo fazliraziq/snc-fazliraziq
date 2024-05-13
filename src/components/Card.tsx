@@ -1,20 +1,22 @@
-import { Person, User } from '@/utils/common/person';
-import { UserContext } from '@/utils/helper/UserNameContext';
+import { User } from '@/utils/common/person';
+import { LogContext } from '@/utils/helper/EnableLogContext';
 import axios, { CancelTokenSource } from 'axios';
 import Image from 'next/image';
-import React, { Suspense, useContext, useEffect, useState } from 'react'
-import Loading from '../pages/Loading';
+import React, { useContext, useEffect, useState } from 'react'
 
-const Card = () => {
+type CardProp = {
+  username : string
+}
+const Card = (props : CardProp) => {
     
     const [currentRequest, setCurrentRequest] = useState<CancelTokenSource | null>(null);
     const [data , setData] = useState<User>();
-    const context = useContext(UserContext);
+    const context = useContext(LogContext);
 
     useEffect(() => {
         console.log('card component is rending!');
-        context.user && handleApi();
-    },[context.user]);
+        props.username && handleApi();
+    },[props.username]);
 
     const handleApi = async () => {
         if (currentRequest) {
@@ -23,7 +25,7 @@ const Card = () => {
         const cancelTokenSource = axios.CancelToken.source();
         setCurrentRequest(cancelTokenSource);
         try {
-          const response = await axios.get(`api/person?person=${context.user}`, {
+          const response = await axios.get(`api/person?person=${props.username}`, {
             cancelToken: cancelTokenSource.token,
           });
           console.log('Consoling works : ', response.data)
