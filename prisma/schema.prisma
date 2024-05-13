@@ -15,19 +15,19 @@ datasource db {
 
 
 model Company {
-  id         Int      @id @default(autoincrement())
-  name       String   @unique
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  users    User[]   // This will create a many-to-many relationship
 }
 
 model User {
-  id                 Int    @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   backgroundImageUrl String
-  profilePictureUrl  String
-  name               String @db.VarChar(100)
-  title              String @db.VarChar(100)
-  followers          Int
-  following          Int
-
-  companies   Company[]  @relation(fields: [companyIds], references: [id])
-  companyIds  Int[]
+  profilePictureUrl String
+  name             String   @db.VarChar(100)
+  title            String   @db.VarChar(100)
+  followers        Int
+  following        Int
+  companies        Company[]  // This will create a many-to-many relationship
 }
+

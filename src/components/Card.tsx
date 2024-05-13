@@ -1,8 +1,7 @@
 import { User } from '@/utils/common/person';
-import { LogContext } from '@/utils/helper/EnableLogContext';
 import axios, { CancelTokenSource } from 'axios';
 import Image from 'next/image';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 type CardProp = {
   username : string
@@ -11,7 +10,6 @@ const Card = (props : CardProp) => {
     
     const [currentRequest, setCurrentRequest] = useState<CancelTokenSource | null>(null);
     const [data , setData] = useState<User>();
-    const context = useContext(LogContext);
 
     useEffect(() => {
         console.log('card component is rending!');

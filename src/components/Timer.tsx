@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 export const Timer = () => {
-  const [time, setTime] = useState('Loading...');
+  const timeRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(getFormattedTime());
+      updateTime();
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  function getFormattedTime() {
+  const updateTime = () => {
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, '0');
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -20,12 +20,14 @@ export const Timer = () => {
     const minutes = String(currentDate.getMinutes()).padStart(2, '0');
     const seconds = String(currentDate.getSeconds()).padStart(2, '0');
 
-    return `${day}-${month}-${year} : ${hours}:${minutes}:${seconds}`;
-  }
+    if (timeRef.current) {
+      timeRef.current.textContent = `${day}-${month}-${year} : ${hours}:${minutes}:${seconds}`;
+    }
+  };
 
   return (
     <div>
-      <h2>Timer: {time}</h2>
+      <h2>Timer: <span ref={timeRef}>Loading...</span></h2>
     </div>
   );
 };
